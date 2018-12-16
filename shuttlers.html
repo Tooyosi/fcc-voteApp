@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Shuttlers Debit</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sidenav">
+  <a href="#about">Manage Users</a>
+ 
+</div>
+
+  <h2>Shuttlers Debit Made Easier</h2>
+  <button id="debitMultiple" onclick="debitMultiple()">Debit Multiple Users</button>
+  <div id="selectTimenDate">
+    <select id="selectTime">
+      <option value="0">Select Time:</option>
+      <option value="8:00 AM">8:00 AM</option>
+      <option value="9:00 AM">9:00 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+    </select>
+    <input type="date" id="selectDate">
+  </div>
+    
+  
+  <input type="text" autofocus placeholder="Search for users" id="search" onkeyup="search()" style="float:right">
+  
+  <button style="display:none" id="clearSelection" onclick="clearSelection()">Clear Current Selection</button>
+  <button style="display:none" id="debit" onclick="debit()">Debit</button>
+  
+  <div id="debtors" style="display:none"></div>
+  
+  <table>
+    <thead>
+      <tr>
+        <td>Names</td>
+        <td>Email</td>
+        <td>Phone</td>
+        <td>Account Balance</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ojo-Femi</td>
+        <td>ojokotor@gmail.com</td>
+        <td>09097563523</td>
+        <td>5000</td>
+      </tr>
+      <tr>
+        <td>Toyosi</td>
+        <td>toyosi@gmail.com</td>
+        <td>09097563523</td>
+        <td>540</td>
+      </tr>
+      <tr>
+        <td>Ojo-Shetemi</td>
+        <td>shetemi@gmail.com</td>
+        <td>09097563523</td>
+        <td>2320</td>
+      </tr>
+      <tr>
+        <td>Bidemi</td>
+        <td>bidemi@gmail.com</td>
+        <td>09097563523</td>
+        <td>1150</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+<script src="script.js"></script>
+</body>
+
+</html>

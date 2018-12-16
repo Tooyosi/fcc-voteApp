@@ -1,0 +1,37 @@
+tr,td {
+  padding: 10px;
+  text-align:center;
+}
+
+tr:nth-child(even) {
+  background-color:#13f346;
+}
+input, button, select {
+  padding: 10px;
+  margin: 5px;
+  display: inline-block;
+}
+
+#selectTimenDate {
+  display:none;
+}
+
+#debit, #clearSelection {
+  float: right;
+}
+
+.debtor {
+  padding:10px;
+  background-color: blue;
+  margin: 5px;
+}
+
+#debtors {
+  margin: 10px;
+  padding: 5px;
+}
+table {
+  margin: 5px;
+  margin-top: 15px;
+  width: 100%;
+}
