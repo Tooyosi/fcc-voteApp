@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Answer this Poll</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary navbar-expand-md">
+    <a class="navbar-brand" href="/">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:8080/my-polls.html">My Polls</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:8080/newpoll.html">New Polls</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+ 
+  <div class="container">
+  <h1 id="poll-goes-here" class="text-center my-5"></h1>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-sm-6 col-lg-4">
+        <br>
+        <div style="height:250px;width:100%" class="py-3 px-3">
+          <form id="vote-form" action="/api/vote" method="post"></form>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div id="chartContainer" style="height:250px;width:100%"></div>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </div>
+
+  <div id="poll"></div>
+  <br>
+   
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+     <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+      let voted = false;
+      const wind = window.location.href;
+      const id = wind.slice(wind.lastIndexOf('/') + 1);
+      const ip = wind.slice(0, wind.indexOf('/api'));
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, options);
+      });
+     $(document).ready(() => {
+       
+     
+      console.log(`This user has voted? ${voted}`)
+      var poll = document.getElementById('poll');
+      var pollHead = document.getElementById('poll-goes-here');
+     
+      let chartContainer = $('#chartContaier');
+
+      if (poll) {
+        fetch('/api/' + id)
+          .then( res => res.json())
+          .then(data => {
+            document.title = data.voteName;
+            pollHead.innerHTML = data.voteName;
+            const options = data.voteOptions;
+            const optionsArray = [];
+            const votedArray = data.usersVoted;
+            if (votedArray.includes(ip)){
+                voted = true;
+            }
+            console.log(`Here we're checking the status of the initial votes when the form is submitted. It is ${voted}`)
+            for (var x in options){
+              optionsArray.push({y: options[x], label: x});
+              form.innerHTML += `<p>
+                                <input type="radio" name="option" id="${x}" value="${x}">
+                                <label for="${x}">${x[0].toUpperCase()}${x.slice(1)}</label>
+                                </p>
+            `
+            }
+            console.log(voted)
+            form.innerHTML += `<input type="submit" value="Vote" class="btn">`;
+            if (chartContainer){
+            var chart = new CanvasJS.Chart("chartContainer", {
+              	animationEnabled: true,
+              	title:{
+              		text: "Votes for " + data.voteName,
+              		horizontalAlign: "center"
+              	},
+              	data: [{
+              		type: "doughnut",
+              		startAngle: 60,
+              		innerRadius: 80,
+              		indexLabelFontSize: 15,
+              		indexLabel: "{label} - #percent%",
+              		toolTipContent: "<b>{label}:</b> {y} votes (#percent%)",
+              		dataPoints: optionsArray
+              	}]
+              });
+              chart.render();
+            }
+          })
+          .catch(err => console.log(err))
+      }
+     })
+      
+      let form = document.getElementById('vote-form');
+      
+      form.addEventListener('submit',(e) => {
+        console.log(voted)
+        console.log('Default prevented - form will not submit now');
+        e.preventDefault()
+
+          const option = document.querySelector('input[name=option]:checked').value;
+          const data = {option: option}
+          if(!voted){
+            fetch('/api/vote', {
+              method: "post",
+              body: JSON.stringify(data),
+              headers: {
+                    "Content-Type": "application/json"
+                }
+              })
+              .then(res => res.json())
+              .then(data => {
+                const options = data.voteOptions;
+                const optionsArray = [];
+                const votedArray = data.usersVoted;
+                console.log(`The initial votedArray Length is ${votedArray.length}`);
+                if (votedArray.length == 1 && votedArray[0] == ip){
+                  voted = true;
+                  console.log(`Here we're checking the status of the initial votes when the form is submitted. It is ${voted}`)
+                }
+                for (var x in options){
+                  optionsArray.push({y: options[x], label: x});
+                }
+                
+                if (chartContainer){
+                var chart = new CanvasJS.Chart("chartContainer", {
+                  	animationEnabled: true,
+                  	title:{
+                  		text: "Votes for " + data.voteName,
+                  		horizontalAlign: "center"
+                  	},
+                  	data: [{
+                  		type: "doughnut",
+                  		startAngle: 60,
+                  		innerRadius: 80,
+                  		indexLabelFontSize: 15,
+                  		indexLabel: "{label} - #percent%",
+                  		toolTipContent: "<b>{label}:</b> {y} votes (#percent%)",
+                  		dataPoints: optionsArray
+                  	}]
+                  });
+                  chart.render();
+                }
+              })
+              .catch(err => console.log(err))
+          } else {
+            alert('User/IP address can only vote once, try voting for another poll, or just make your own');
+          }
+      });
+    </script>
+  </body>
+</html>

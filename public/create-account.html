@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Login - Personal Vote App</title>
+  </head>
+  <body>
+    <div>
+    <nav>
+    <div class="nav-wrapper teal lighten-2">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="my-polls.html">My Polls</a></li>
+        <li><a href="newpoll.html">New Polls</a></li>
+        <li><a href="login.html">Login With Github</a></li>
+      </ul>
+    </div>
+    </nav>
+    </div>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="/">Home</a></li>
+      <li><a href="my-polls.html">My Polls</a></li>
+      <li><a href="newpoll.html">New Polls</a></li>
+    </ul>
+    <main>
+      <div class="container">
+        <form action="/create-account" method="post" id="login">
+        <p1>Name: <input type="text" name="username" id="username"></p1>
+        
+        <p>Password: <input style="display:inline" type="password" name="password" id="password"></p>
+        
+        <p style="display:inline">Confirm Password: <input style="display:inline" type="password" name="confirm-password" id="confirm-password"></p>
+        
+        <input type="submit" value="submit" class="btn">
+        </form>
+      </div>
+    </main>
+    
+   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+     <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
