@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const shortid = require('shortid');
+require('dotenv');
 
 
 // allow cross origin
@@ -172,4 +173,4 @@ app.post('/create-account', (req,res) => {
 
 const port = 8080;
 
-app.listen(port, () => console.log(`We're listening on ${port}`));
+app.listen(process.env.PORT, process.env.IP, () => console.log(`We're listening on ${port}`));
